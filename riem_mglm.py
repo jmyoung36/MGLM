@@ -61,7 +61,7 @@ def mglm_spd(X, Y, maxiter=500) :
     # loop for the specified number of iterations
     for niter in range(maxiter) :
         
-        print niter
+        print (niter)
         Y_hat = prediction_spd(p, V, X)
         J = logmap_vecs_spd(Y_hat, Y)
         err_TpM = paralleltranslateAtoB_spd(Y_hat, p, J)
@@ -361,11 +361,13 @@ def weightedsum_mx(mx, w) :
 #    w is N weights for matrices. w is a column or row vector.
 #    S is the weighted sum of mx.
 #
-#   See also  MGLM_SPD
-
-    w = np.reshape(w,(1, 1, len(w)))
-    w = np.tile(w, (np.shape(mx)[0], np.shape(mx)[1], 1));
-    S = np.sum(mx*w, axis=2);
+#   See also MGLM_SPD
+    # no idea why this is necessary
+    w_1 = np.squeeze(np.array(w))
+    
+    w_1 = np.reshape(w_1,(1, 1, len(w_1)))
+    w_1 = np.tile(w_1, (np.shape(mx)[0], np.shape(mx)[1], 1));
+    S = np.sum(mx*w_1, axis=2);
     return S
         
 def isspd(mx, c=np.finfo(np.float).eps)  :
